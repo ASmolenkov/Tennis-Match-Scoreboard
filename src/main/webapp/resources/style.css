@@ -1,0 +1,61 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    color: darkgreen;
+    text-align: center;
+    margin-top: 300px;
+    background-color: #b1b1b2;
+
+}
+.tennis-image {
+    display: block;        /* Делаем картинку блочным элементом */
+    margin: 20px auto;     /* auto по горизонтали центрирует */
+    width: 500px;          /* Фиксированная ширина (опционально) */
+    max-width: 100%;       /* Адаптивность */
+}
+.tennis-image {
+    border-radius: 16px;
+    padding: 4px; /* Толщина рамки */
+    background: linear-gradient(45deg, #1a5f3a, #4CAF50, #8BC34A);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+
+.form-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+input[type="text"]:focus {
+    outline: none;
+    border-color: #1a5f3a;
+    box-shadow: 0 0 0 4px rgba(26, 95, 58, 0.15);
+}
+
+input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+
+
+
