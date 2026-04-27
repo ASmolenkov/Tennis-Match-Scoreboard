@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,10 @@
 <body>
 <h1>Tennis Match Score Board</h1>
 <img src="resources/image/Tennis.jpg" class="tennis-image" alt="tennis player with a shadow racket">
+
+<c:if test="${not empty error}">
+    <div class="alert alert-error">${error}</div>
+</c:if>
 
 <form action="${pageContext.request.contextPath}/new-math" method="post">
     <div>
