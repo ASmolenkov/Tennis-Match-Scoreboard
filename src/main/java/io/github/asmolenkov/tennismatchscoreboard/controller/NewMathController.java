@@ -65,6 +65,8 @@ public class NewMathController extends HttpServlet {
         playerService.createPlayer(nameOnePlayer);
         playerService.createPlayer(nameSecondPlayer);
         log.info("Игроки Сохранены в БД");
+        req.setAttribute("PlayerOneName", nameOnePlayer);
+        //TODO Изменить на редирект
         req.getRequestDispatcher("/WEB-INF/views/MatchScore.jsp")
            .forward(req, resp);
     }

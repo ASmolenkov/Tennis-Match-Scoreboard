@@ -13,6 +13,8 @@ public class HibernateUtils {
     @Getter
     private static SessionFactory sessionFactory;
 
+
+
     static {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();

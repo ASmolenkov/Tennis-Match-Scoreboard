@@ -13,6 +13,7 @@ public class PlayerRepository {
     }
 
     public boolean existsByName(String name, Session session) {
+        //TODO исправить jpql запрос
         String jpql = "FROM Player p WHERE p.name = :name";
         long result = session.createQuery(jpql, Player.class)
                              .setParameter("name", name)
