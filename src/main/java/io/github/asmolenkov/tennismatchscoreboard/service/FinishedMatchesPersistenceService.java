@@ -8,6 +8,7 @@ import io.github.asmolenkov.tennismatchscoreboard.exception.SaveMatchException;
 import io.github.asmolenkov.tennismatchscoreboard.mapper.MatchMapper;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
 import io.github.asmolenkov.tennismatchscoreboard.repository.FinishedMatchRepository;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,10 +28,12 @@ public class FinishedMatchesPersistenceService {
     }
 
     public void saveMatch(CurrentMatch currentMatch) {
-        Match match = MatchMapper.toEntity(currentMatch);
+
         try (Session session = sessionFactory.openSession()) {
             Transaction tr = session.beginTransaction();
             try {
+                EntityManager entityManager = session.unwrap(EntityManager.class);
+                Match match = MatchMapper.toEntity(currentMatch, entityManager);
                 repository.save(match, session);
                 tr.commit();
                 log.info("Матч {} сохранен", currentMatch.getUuid());

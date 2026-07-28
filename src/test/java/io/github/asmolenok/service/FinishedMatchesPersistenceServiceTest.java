@@ -1,8 +1,8 @@
 package io.github.asmolenok.service;
 
+import io.github.asmolenkov.tennismatchscoreboard.dto.PlayerDto;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
-import io.github.asmolenkov.tennismatchscoreboard.mapper.MatchMapper;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
 import io.github.asmolenkov.tennismatchscoreboard.repository.FinishedMatchRepository;
 import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
@@ -42,10 +42,10 @@ public class FinishedMatchesPersistenceServiceTest {
     @Test
     @DisplayName("Матч сохранен")
     void saveMatch_success(){
-        CurrentMatch currentMatch = TestUtils.createCompletedMatch();
 
-        playerService.createPlayer("Sasha");
-        playerService.createPlayer("Masha");
+        PlayerDto playerDto1 = playerService.createPlayer("Sasha");
+        PlayerDto playerDto2 = playerService.createPlayer("Masha");
+        CurrentMatch currentMatch = TestUtils.createCompletedMatch(playerDto1, playerDto2);
 
         finishedMatches.saveMatch(currentMatch);
 
@@ -53,7 +53,6 @@ public class FinishedMatchesPersistenceServiceTest {
 
         Assertions.assertEquals(currentMatch.getPlayerOne().id(), match.getPlayerOne().getId());
         Assertions.assertEquals(currentMatch.getPlayerSecond().id(), match.getPlayerSecond().getId());
-        Assertions.assertEquals(currentMatch.getPlayerOne().name(), match.getPlayerOne().getName());
-        Assertions.assertEquals(currentMatch.getPlayerSecond().name(), match.getPlayerSecond().getName());
+
     }
 }

@@ -105,6 +105,19 @@ public class TestUtils {
         return buildMatchWithWinner(build);
     }
 
+    public static CurrentMatch createCompletedMatch(PlayerDto playerOne, PlayerDto playerSecond) {
+        MatchScore build = MatchScore.builder()
+                                     .setOneScore(new SetScore())
+                                     .setTwoScore(new SetScore())
+                                     .setThreeScore(new SetScore())
+                                     .playersGameScore(new GameScore())
+                                     .tieBreakScore(new TieBreakScore())
+                                     .tieBreakActive(true)
+                                     .build();
+
+        return buildMatchWithWinner(build, playerOne, playerSecond);
+    }
+
     private static CurrentMatch buildMatch(MatchScore matchScore) {
         return CurrentMatch.builder()
                            .uuid(UUID.randomUUID())
@@ -117,6 +130,16 @@ public class TestUtils {
     private static CurrentMatch buildMatchWithWinner(MatchScore matchScore) {
         PlayerDto playerOne = new PlayerDto(PLAYER_ONE_ID, PLAYER_ONE_NAME);
         PlayerDto playerSecond = new PlayerDto(PLAYER_TWO_ID, PLAYER_TWO_NAME);
+        return CurrentMatch.builder()
+                           .uuid(UUID.randomUUID())
+                           .playerOne(playerOne)
+                           .playerSecond(playerSecond)
+                           .winner(playerOne)
+                           .matchScore(matchScore)
+                           .build();
+    }
+
+    private static CurrentMatch buildMatchWithWinner(MatchScore matchScore, PlayerDto playerOne, PlayerDto playerSecond) {
         return CurrentMatch.builder()
                            .uuid(UUID.randomUUID())
                            .playerOne(playerOne)

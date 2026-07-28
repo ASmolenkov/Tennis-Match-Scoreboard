@@ -37,9 +37,7 @@ public class PlayerService {
                                          return PlayerMapper.toDto(player);
                                      })
                                      .orElseGet(() -> {
-                                         Player newPlayer = Player.builder()
-                                                                  .name(name)
-                                                                  .build();
+                                         Player newPlayer = new Player(name);
                                          playerRepository.save(newPlayer, session);
                                          log.info(LOG_PLAYER_SAVE_TEMPLATE, name);
                                          transaction.commit();
