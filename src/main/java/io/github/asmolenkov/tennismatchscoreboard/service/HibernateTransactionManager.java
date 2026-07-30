@@ -1,5 +1,6 @@
 package io.github.asmolenkov.tennismatchscoreboard.service;
 
+import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,5 +25,22 @@ public class HibernateTransactionManager implements TransactionManager {
             }
             throw e;
         }
+    }
+
+    @Override
+    public Match executeInTransaction(Runnable action) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+
+        try{
+            action.run();
+            transaction.commit();
+        }catch (Exception e){
+            if(transaction.isActive()){
+                transaction.rollback();
+            }
+            throw e;
+        }
+        return null;
     }
 }

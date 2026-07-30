@@ -1,10 +1,10 @@
 package io.github.asmolenkov.tennismatchscoreboard.mapper;
 
 import io.github.asmolenkov.tennismatchscoreboard.dto.MatchDto;
+import io.github.asmolenkov.tennismatchscoreboard.dto.PlayerDto;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
-import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
-import jakarta.persistence.EntityManager;
+
 
 
 import java.util.ArrayList;
@@ -12,25 +12,27 @@ import java.util.List;
 
 public class MatchMapper {
 
-    public static Match toEntity(CurrentMatch model, EntityManager entityManager) {
-        if (model == null) {
-            return null;
-        }
-        Player playerOne = entityManager.getReference(Player.class, model.getPlayerOne().id());
-        Player playerSecond = entityManager.getReference(Player.class, model.getPlayerSecond().id());
-        Player winner = entityManager.getReference(Player.class, model.getWinner().id());
-        return new Match(playerOne, playerSecond, winner);
-    }
-
     public static MatchDto toDto(Match match) {
         if (match == null) {
             return null;
         }
+        PlayerDto playerOne = new PlayerDto(match.getPlayerOne().getId(), match.getPlayerOne().getName());
+        PlayerDto playerSecond = new PlayerDto(match.getPlayerSecond().getId(), match.getPlayerSecond().getName());
+        PlayerDto winner = new PlayerDto(match.getWinner().getId(), match.getWinner().getName());
 
-        return new MatchDto(match.getPlayerOne()
-                                 .getName(), match.getPlayerSecond()
-                                                  .getName(), match.getWinner()
-                                                                   .getName());
+        return new MatchDto(playerOne, playerSecond, winner);
+    }
+
+    public static MatchDto toDto(CurrentMatch match) {
+        if (match == null) {
+            return null;
+        }
+        PlayerDto playerOne = new PlayerDto(match.getPlayerOne().id(), match.getPlayerOne().name());
+        PlayerDto playerSecond = new PlayerDto(match.getPlayerSecond().id(), match.getPlayerSecond().name());
+        PlayerDto winner = new PlayerDto(match.getWinner().id(), match.getWinner().name());
+
+
+        return new MatchDto(playerOne, playerSecond, winner);
     }
 
     public static List<MatchDto> toDtoList(List<Match> entity) {

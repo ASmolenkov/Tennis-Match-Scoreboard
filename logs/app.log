@@ -702,3 +702,92 @@
 2026-07-30 20:28:59 INFO  i.g.a.t.service.PlayerService - Player Sasha is saved in the database!
 2026-07-30 20:28:59 INFO  i.g.a.t.service.PlayerService - Player Masha is saved in the database!
 2026-07-30 20:28:59 INFO  i.g.a.t.s.FinishedMatchesPersistenceService - Матч ee1f08fb-db7d-4f90-9a65-4480aa6076b4 сохранен
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - e7966959-e75a-4d94-9148-61a763b8df0a removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - 8599b01d-21ac-4991-88b1-31c88f98c89d removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Resetting Opponent's Advantage
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Resetting Opponent's Advantage
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - 1451a093-7c14-4fe9-9852-ed69fb28f51f removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - 4e607c1c-cd24-4662-90eb-63a42f454411 removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - The tie-break is over. Set Winner: TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Tie-break begins
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Tie-break begins
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - ONE
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - d415525b-9639-461c-a635-d5a29bfd88d6 removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Match ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Winner - TWO
+2026-07-30 21:43:20 INFO  i.g.a.t.r.ActiveMatchRepository - Match with UUID - 136f3c59-7f50-46f8-a230-974655afd64a removed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Game ended
+2026-07-30 21:43:20 INFO  i.g.a.t.s.MatchScoreCalculationService - Set Completed
+2026-07-30 21:43:20 INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.0.4.Final
+2026-07-30 21:43:21 WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2026-07-30 21:43:21 WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30 21:43:21 INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:test_tennis_db;DB_CLOSE_DELAY=-1]
+	Database driver: org.h2.Driver
+	Database version: 2.4.240
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Pool: DriverManagerConnectionProviderImpl
+	Minimum pool size: 1
+	Maximum pool size: 20
+2026-07-30 21:43:21 INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@22604c7e] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2026-07-30 21:43:21 INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@73ddb7ef] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2026-07-30 21:43:22 INFO  i.g.a.t.service.PlayerService - Player Иван is saved in the database!
+2026-07-30 21:43:22 INFO  i.g.a.t.service.PlayerService - Player Мария is saved in the database!
+2026-07-30 21:43:22 INFO  i.g.a.t.service.PlayerService - Player Мария already exists in the database!
+2026-07-30 21:43:22 INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6dc5e857] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2026-07-30 21:43:22 INFO  i.g.a.t.r.ActiveMatchRepository - Match Sasha - Masha saved
+2026-07-30 21:43:22 WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2026-07-30 21:43:22 WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-07-30 21:43:22 INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:test_tennis_db;DB_CLOSE_DELAY=-1]
+	Database driver: org.h2.Driver
+	Database version: 2.4.240
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Pool: DriverManagerConnectionProviderImpl
+	Minimum pool size: 1
+	Maximum pool size: 20
+2026-07-30 21:43:22 INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7ef8899d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2026-07-30 21:43:22 INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@41bc501b] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2026-07-30 21:43:22 INFO  i.g.a.t.service.PlayerService - Player Sasha is saved in the database!
+2026-07-30 21:43:22 INFO  i.g.a.t.service.PlayerService - Player Masha is saved in the database!

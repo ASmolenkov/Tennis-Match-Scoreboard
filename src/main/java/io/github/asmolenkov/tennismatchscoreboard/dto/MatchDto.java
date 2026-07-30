@@ -1,4 +1,4 @@
 package io.github.asmolenkov.tennismatchscoreboard.dto;
 
-public record MatchDto(String playerOneName, String playerSecondName, String winnerName) {
+public record MatchDto(PlayerDto playerOne, PlayerDto playerSecond, PlayerDto winner) {
 }

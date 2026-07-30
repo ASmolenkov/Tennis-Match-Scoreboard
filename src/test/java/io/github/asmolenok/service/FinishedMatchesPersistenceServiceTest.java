@@ -4,11 +4,12 @@ import io.github.asmolenkov.tennismatchscoreboard.dto.PlayerDto;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
-import io.github.asmolenkov.tennismatchscoreboard.repository.FinishedMatchRepository;
+import io.github.asmolenkov.tennismatchscoreboard.repository.HibernateFinishedMatchRepository;
 import io.github.asmolenkov.tennismatchscoreboard.repository.HibernatePlayerRepository;
 import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistenceService;
 import io.github.asmolenkov.tennismatchscoreboard.service.HibernateTransactionManager;
 import io.github.asmolenkov.tennismatchscoreboard.service.PlayerService;
+import io.github.asmolenkov.tennismatchscoreboard.service.TransactionManager;
 import io.github.asmolenok.utils.TestUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -18,6 +19,7 @@ public class FinishedMatchesPersistenceServiceTest {
     private static SessionFactory testSf;
     private FinishedMatchesPersistenceService finishedMatches;
     private PlayerService playerService;
+    private final TransactionManager transactionManager = new HibernateTransactionManager(testSf);
 
     @BeforeAll
     static void initDatabase() {
@@ -35,8 +37,8 @@ public class FinishedMatchesPersistenceServiceTest {
 
     @BeforeEach
     void setUp() {
-        FinishedMatchRepository finishedMatchRepository = new FinishedMatchRepository();
-        finishedMatches = new FinishedMatchesPersistenceService(testSf, finishedMatchRepository);
+        HibernateFinishedMatchRepository hibernateFinishedMatchRepository = new HibernateFinishedMatchRepository(testSf);
+        finishedMatches = new FinishedMatchesPersistenceService(transactionManager, hibernateFinishedMatchRepository);
         HibernatePlayerRepository hibernatePlayerRepository = new HibernatePlayerRepository(testSf);
         playerService = new PlayerService(hibernatePlayerRepository, new HibernateTransactionManager(testSf));
     }
