@@ -1,7 +1,8 @@
 package io.github.asmolenok.service;
 
 import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
-import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
+import io.github.asmolenkov.tennismatchscoreboard.repository.HibernatePlayerRepository;
+import io.github.asmolenkov.tennismatchscoreboard.service.HibernateTransactionManager;
 import io.github.asmolenkov.tennismatchscoreboard.service.PlayerService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerServiceTest {
     private static SessionFactory testSf;
     private PlayerService playerService;
-    private PlayerRepository playerRepo;
 
     @BeforeAll
     static void initDatabase() {
@@ -26,6 +26,7 @@ public class PlayerServiceTest {
                 .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
                 .setProperty("hibernate.hbm2ddl.auto", "create-drop")
                 .setProperty("hibernate.show_sql", "true")
+                .setProperty("hibernate.current_session_context_class","thread")
                 .addAnnotatedClass(Player.class)
                 .buildSessionFactory();
     }
@@ -37,8 +38,8 @@ public class PlayerServiceTest {
 
     @BeforeEach
     void setUp() {
-        playerRepo = new PlayerRepository();
-        playerService = new PlayerService(playerRepo, testSf);
+        HibernatePlayerRepository playerRepo = new HibernatePlayerRepository(testSf);
+        playerService = new PlayerService(playerRepo, new HibernateTransactionManager(testSf));
     }
 
     @Test

@@ -7,9 +7,6 @@ import io.github.asmolenkov.tennismatchscoreboard.mapper.PlayerMapper;
 import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.util.Optional;
 
@@ -19,34 +16,28 @@ public class PlayerService {
 
     private static final String LOG_PLAYER_EXISTS_TEMPLATE = "Player {} already exists in the database!";
     private static final String LOG_PLAYER_SAVE_TEMPLATE = "Player {} is saved in the database!";
-    private static final String ERROR_SAVE_PLAYER = "Player creation error";
+    private static final String ERROR_SAVE_PLAYER = "Failed to create player %s";
 
     private final PlayerRepository playerRepository;
-    private final SessionFactory sessionFactory;
+    private final TransactionManager transactionManager;
 
 
     public PlayerDto createPlayer(String name)  {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            try {
-                Optional<Player> existingPlayer = playerRepository.findPlayer(name, session);
+        try{
+            return transactionManager.executeInTransaction(() -> {
+                Optional<Player> existingPlayer = playerRepository.findByName(name);
+                if(existingPlayer.isPresent()){
+                    log.info(LOG_PLAYER_EXISTS_TEMPLATE, name);
+                    return PlayerMapper.toDto(existingPlayer.get());
+                }
+                Player newPlayer = new Player(name);
+                playerRepository.save(newPlayer);
+                log.info(LOG_PLAYER_SAVE_TEMPLATE, name);
 
-                return existingPlayer.map(player -> {
-                                         transaction.rollback();
-                                         log.info(LOG_PLAYER_EXISTS_TEMPLATE, name);
-                                         return PlayerMapper.toDto(player);
-                                     })
-                                     .orElseGet(() -> {
-                                         Player newPlayer = new Player(name);
-                                         playerRepository.save(newPlayer, session);
-                                         log.info(LOG_PLAYER_SAVE_TEMPLATE, name);
-                                         transaction.commit();
-                                         return PlayerMapper.toDto(newPlayer);
-                                     });
-            } catch (Exception e) {
-                transaction.rollback();
-                throw new PlayerCreationException(ERROR_SAVE_PLAYER, e);
-            }
+                return PlayerMapper.toDto(newPlayer);
+            });
+        }catch (Exception e){
+            throw new PlayerCreationException(ERROR_SAVE_PLAYER.formatted(name), e);
         }
     }
 }

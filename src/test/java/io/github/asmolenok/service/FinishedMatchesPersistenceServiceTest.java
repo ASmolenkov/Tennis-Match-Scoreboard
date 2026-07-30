@@ -5,8 +5,9 @@ import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
 import io.github.asmolenkov.tennismatchscoreboard.repository.FinishedMatchRepository;
-import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
+import io.github.asmolenkov.tennismatchscoreboard.repository.HibernatePlayerRepository;
 import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistenceService;
+import io.github.asmolenkov.tennismatchscoreboard.service.HibernateTransactionManager;
 import io.github.asmolenkov.tennismatchscoreboard.service.PlayerService;
 import io.github.asmolenok.utils.TestUtils;
 import org.hibernate.SessionFactory;
@@ -26,6 +27,7 @@ public class FinishedMatchesPersistenceServiceTest {
                 .setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect")
                 .setProperty("hibernate.hbm2ddl.auto", "create-drop")
                 .setProperty("hibernate.show_sql", "true")
+                .setProperty("hibernate.current_session_context_class","thread")
                 .addAnnotatedClass(Match.class)
                 .addAnnotatedClass(Player.class)
                 .buildSessionFactory();
@@ -35,8 +37,8 @@ public class FinishedMatchesPersistenceServiceTest {
     void setUp() {
         FinishedMatchRepository finishedMatchRepository = new FinishedMatchRepository();
         finishedMatches = new FinishedMatchesPersistenceService(testSf, finishedMatchRepository);
-        PlayerRepository playerRepository = new PlayerRepository();
-        playerService = new PlayerService(playerRepository, testSf);
+        HibernatePlayerRepository hibernatePlayerRepository = new HibernatePlayerRepository(testSf);
+        playerService = new PlayerService(hibernatePlayerRepository, new HibernateTransactionManager(testSf));
     }
 
     @Test

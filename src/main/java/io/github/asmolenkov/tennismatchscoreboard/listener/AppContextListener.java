@@ -2,11 +2,8 @@ package io.github.asmolenkov.tennismatchscoreboard.listener;
 
 import io.github.asmolenkov.tennismatchscoreboard.repository.ActiveMatchRepository;
 import io.github.asmolenkov.tennismatchscoreboard.repository.FinishedMatchRepository;
-import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
-import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistenceService;
-import io.github.asmolenkov.tennismatchscoreboard.service.MatchScoreCalculationService;
-import io.github.asmolenkov.tennismatchscoreboard.service.OngoingMatchesService;
-import io.github.asmolenkov.tennismatchscoreboard.service.PlayerService;
+import io.github.asmolenkov.tennismatchscoreboard.repository.HibernatePlayerRepository;
+import io.github.asmolenkov.tennismatchscoreboard.service.*;
 import io.github.asmolenkov.tennismatchscoreboard.utils.HibernateUtils;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -29,16 +26,16 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
-        PlayerRepository playerRepository = new PlayerRepository();
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        PlayerService playerService = new PlayerService(playerRepository, sessionFactory);
+        HibernatePlayerRepository hibernatePlayerRepository = new HibernatePlayerRepository(sessionFactory);
+        PlayerService playerService = new PlayerService(hibernatePlayerRepository, new HibernateTransactionManager(sessionFactory));
         ActiveMatchRepository activeMatchRepository = new ActiveMatchRepository();
         OngoingMatchesService ongoingMatchesService = new OngoingMatchesService(activeMatchRepository);
         FinishedMatchRepository finishedMatchRepository = new FinishedMatchRepository();
         MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService(activeMatchRepository);
         FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(sessionFactory, finishedMatchRepository);
         context.setAttribute(PLAYER_SERVICE_KEY, playerService);
-        context.setAttribute(PLAYER_REPOSITORY_KEY, playerRepository);
+        context.setAttribute(PLAYER_REPOSITORY_KEY, hibernatePlayerRepository);
         context.setAttribute(MATH_REPOSITORY_KEY, activeMatchRepository);
         context.setAttribute(ONGOING_MATH_SERVICE_KEY, ongoingMatchesService);
         context.setAttribute(MATCH_SCORE_CALCULATION_SERVICE_KEY, matchScoreCalculationService);
