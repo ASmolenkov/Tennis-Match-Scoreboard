@@ -1,5 +1,6 @@
 package io.github.asmolenkov.tennismatchscoreboard.repository;
 
+import io.github.asmolenkov.tennismatchscoreboard.exception.DeleteActiveMatchException;
 import io.github.asmolenkov.tennismatchscoreboard.exception.SaveActiveMatchException;
 import io.github.asmolenkov.tennismatchscoreboard.model.CurrentMatch;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +20,15 @@ public class ActiveMatchRepository {
 
     private final Map<UUID, CurrentMatch> activeMatches = new ConcurrentHashMap<>();
 
-    public void save(CurrentMatch currentMatch){
+    public UUID save(CurrentMatch currentMatch){
         if (currentMatch == null) {
             throw new SaveActiveMatchException(CURRENT_MATCH_NULL);
         }
-        if (currentMatch.getUuid() == null) {
-            throw new SaveActiveMatchException(MATCH_UUID_NULL);
-        }
-        activeMatches.put(currentMatch.getUuid(),currentMatch);
+        UUID uuid = UUID.randomUUID();
+        CurrentMatch saveCurrentMatch = new CurrentMatch(uuid,currentMatch.getPlayerOne(),currentMatch.getPlayerSecond());
+        activeMatches.put(uuid,saveCurrentMatch);
         log.info(LOG_MATCH_SAVE_TEMPLATE,currentMatch.getPlayerOne().name(), currentMatch.getPlayerSecond().name());
+        return uuid;
     }
 
     public Optional<CurrentMatch> find(UUID uuidActiveMatch){
@@ -40,9 +41,10 @@ public class ActiveMatchRepository {
 
     public void delete (UUID finishedMatch){
         if(finishedMatch == null){
-            throw new SaveActiveMatchException(MATCH_UUID_NULL);
+            throw new DeleteActiveMatchException(MATCH_UUID_NULL);
         }
         activeMatches.remove(finishedMatch);
         log.info(MATCH_DELETED_TEMPLATE, finishedMatch);
     }
+
 }

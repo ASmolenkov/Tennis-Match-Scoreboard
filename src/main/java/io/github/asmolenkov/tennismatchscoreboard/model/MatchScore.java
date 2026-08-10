@@ -1,95 +1,70 @@
 package io.github.asmolenkov.tennismatchscoreboard.model;
 
-import lombok.Builder;
+import io.github.asmolenkov.tennismatchscoreboard.exception.addPoint.AddPointMatchScoreException;
+
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-@Builder
+
+
+
 @Getter
 public class MatchScore {
-    private static final int NUMBER_SET_WON = 2;
-    private static final int GAME_SCORE = 6;
-    private static final int POINT_DIFFERENCE_IN_SET = 2;
+    private static final int SETS_TO_WIN = 2;
+    private static final String CANNOT_ADD_POINT = "Cannot add point: Match is already finished";
 
-    @Builder.Default
-    private SetScore setOneScore = new SetScore();
-    @Builder.Default
-    private SetScore setTwoScore = new SetScore();
-    @Builder.Default
-    private SetScore setThreeScore = new SetScore();
-    @Builder.Default
-    private boolean tieBreakActive = false;
-    @Builder.Default
-    private TieBreakScore tieBreakScore = new TieBreakScore();
-    @Builder.Default
-    private final GameScore playersGameScore = new GameScore();
+    private final List<SetScore> sets = new ArrayList<>();
+    private SetScore currentSet;
 
-    public void activateTieBreak() {
-
-        this.tieBreakActive = true;
+    public MatchScore() {
+        this.currentSet = new SetScore();
+        this.sets.add(this.currentSet);
     }
 
-    public void deactivateTieBreak() {
-        this.tieBreakActive = false;
+
+    public void addPoint(PlayerSide playerSide) {
+        if (isMatchFinished()) {
+            throw new AddPointMatchScoreException(CANNOT_ADD_POINT);
+        }
+
+        currentSet.addPoint(playerSide);
+
+        if(currentSet.isSetFinished()){
+            handleSetFinished();
+        }
     }
+
 
     public boolean isMatchFinished() {
-        int setsWonP1 = countSetWon(PlayerSide.ONE);
-        int setsWonP2 = countSetWon(PlayerSide.TWO);
-
-        return setsWonP1 >= NUMBER_SET_WON || setsWonP2 >= NUMBER_SET_WON;
+        return getWinner().isPresent();
     }
 
-    public boolean isStartTieBreak(int playerOneGames, int playerTwoGames){
-        return playerOneGames == GAME_SCORE && playerTwoGames == GAME_SCORE;
-    }
+    public Optional<PlayerSide> getWinner(){
+        int playerOneSets = countWonGames(PlayerSide.ONE);
+        int playerSecondSets = countWonGames(PlayerSide.TWO);
 
-    public boolean isStartTieBreak(SetScore set){
-        return isStartTieBreak(set.getPlayerOneGameCount(), set.getPlayerSecondGameCount());
-    }
-
-    public boolean isSetFinished(SetScore set){
-        return isSetFinished(set.getPlayerOneGameCount(), set.getPlayerSecondGameCount());
-    }
-
-    private boolean isSetFinished(int playerOneGames, int playerTwoGames) {
-        return  (playerOneGames >= GAME_SCORE && playerOneGames - playerTwoGames >= POINT_DIFFERENCE_IN_SET) ||
-                (playerTwoGames >= GAME_SCORE && playerTwoGames - playerOneGames >= POINT_DIFFERENCE_IN_SET);
-
-    }
-
-    private int countSetWon(PlayerSide side){
-        int count = 0;
-        if(isSetWon(setOneScore, side)){
-            count ++;
+        if(playerOneSets >= SETS_TO_WIN){
+            return Optional.of(PlayerSide.ONE);
         }
-        if(isSetWon(setTwoScore, side)){
-            count++;
+        if(playerSecondSets >= SETS_TO_WIN){
+            return Optional.of(PlayerSide.TWO);
         }
-        if (isSetWon(setThreeScore, side)){
-            count++;
-        }
-        return count;
+        return Optional.empty();
     }
 
-    private boolean isSetWon(SetScore set, PlayerSide side){
-        if(set.isSetActive()){
-            return false;
+    private void handleSetFinished(){
+        if(isMatchFinished()){
+            return;
         }
-        int p1 = set.getPlayerOneGameCount();
-        int p2 = set.getPlayerSecondGameCount();
-
-        return side == PlayerSide.ONE ? p1 > p2 : p2 > p1;
+        this.currentSet = new SetScore();
+        this.sets.add(currentSet);
     }
 
-    public SetScore getCurrentSet() {
-        if (setOneScore.isSetActive()) {
-            return setOneScore;
-        } else if (setTwoScore.isSetActive()) {
-            return setTwoScore;
-        } else {
-            return setThreeScore;
-        }
+    private int countWonGames(PlayerSide playerSide) {
+        return (int) sets.stream().filter(set -> set.getWinner().orElse(null) == playerSide).count();
     }
 
 

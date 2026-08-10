@@ -18,6 +18,11 @@ public abstract class BaseServlet extends HttpServlet {
     private static final String LOG_NOT_FOUND_ERROR_TEMPLATE = "Not found error [{}] on {}: {}";
     private static final String LOG_ITERNAL_SERVER_ERROR_TEMPLATE = "Internal Server Error [{}] on {}: {}";
 
+    private static final String USER_CONFLICT_ERROR = "Data conflict. A player with the same name already exists";
+    private static final String USER_NOT_FOUND_ERROR = "The requested data was not found.";
+    private static final String USER_INTERNAL_ERROR = "An internal error has occurred. Please try again later.";
+
+
     protected abstract String getErrorPath();
 
     @Override
@@ -37,14 +42,14 @@ public abstract class BaseServlet extends HttpServlet {
                      .getSimpleName(),
                     req.getRequestURI(),
                     e.getMessage());
-            handleError(req, resp, getErrorPath(), e.getMessage(), HttpServletResponse.SC_CONFLICT);
+            handleError(req, resp, getErrorPath(), USER_CONFLICT_ERROR, HttpServletResponse.SC_CONFLICT);
         } catch (FindMatchException e) {
             log.warn(LOG_NOT_FOUND_ERROR_TEMPLATE,
                     e.getClass()
                      .getSimpleName(),
                     req.getRequestURI(),
-                    e.getMessage());
-            handleError(req, resp, getErrorPath(), e.getMessage(), HttpServletResponse.SC_NOT_FOUND);
+                    e.getMessage(),e);
+            handleError(req, resp, getErrorPath(), USER_NOT_FOUND_ERROR, HttpServletResponse.SC_NOT_FOUND);
         } catch (PlayerCreationException | SaveMatchException  | SaveActiveMatchException e) {
             log.error(LOG_ITERNAL_SERVER_ERROR_TEMPLATE,
                     e.getClass()
@@ -52,7 +57,7 @@ public abstract class BaseServlet extends HttpServlet {
                     req.getRequestURI(),
                     e.getMessage(),
                     e);
-            handleError(req, resp, getErrorPath(), e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            handleError(req, resp, getErrorPath(), USER_INTERNAL_ERROR, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

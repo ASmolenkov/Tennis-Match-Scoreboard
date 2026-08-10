@@ -5,18 +5,18 @@ import io.github.asmolenkov.tennismatchscoreboard.entity.Player;
 import io.github.asmolenkov.tennismatchscoreboard.exception.PlayerCreationException;
 import io.github.asmolenkov.tennismatchscoreboard.mapper.PlayerMapper;
 import io.github.asmolenkov.tennismatchscoreboard.repository.PlayerRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
 @Slf4j
-@AllArgsConstructor
-public class PlayerService {
+@RequiredArgsConstructor
+public class PlayerService implements PlayerInterface {
 
     private static final String LOG_PLAYER_EXISTS_TEMPLATE = "Player {} already exists in the database!";
     private static final String LOG_PLAYER_SAVE_TEMPLATE = "Player {} is saved in the database!";
-    private static final String ERROR_SAVE_PLAYER = "Failed to create player %s";
+    private static final String ERROR_SAVE_PLAYER_TEMPLATE = "Failed to create player %s";
 
     private final PlayerRepository playerRepository;
     private final TransactionManager transactionManager;
@@ -37,7 +37,7 @@ public class PlayerService {
                 return PlayerMapper.toDto(newPlayer);
             });
         }catch (Exception e){
-            throw new PlayerCreationException(ERROR_SAVE_PLAYER.formatted(name), e);
+            throw new PlayerCreationException(ERROR_SAVE_PLAYER_TEMPLATE.formatted(name), e);
         }
     }
 }

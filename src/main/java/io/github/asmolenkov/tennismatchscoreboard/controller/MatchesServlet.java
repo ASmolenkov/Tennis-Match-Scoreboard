@@ -1,7 +1,6 @@
 package io.github.asmolenkov.tennismatchscoreboard.controller;
 
 import io.github.asmolenkov.tennismatchscoreboard.dto.MatchesPage;
-import io.github.asmolenkov.tennismatchscoreboard.listener.AppContextListener;
 import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistenceService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -12,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 @Slf4j
 @WebServlet("/matches")
-public class MatchesController extends BaseServlet {
+public class MatchesServlet extends BaseServlet {
 
     private static final String PARAMETER_FILTER = "filterByPlayerName";
     private static final String PARAMETER_PAGE = "page";
@@ -30,7 +29,7 @@ public class MatchesController extends BaseServlet {
     @Override
     public void init()  {
         ServletContext context = getServletContext();
-        this.finishedMatches = (FinishedMatchesPersistenceService) context.getAttribute(AppContextListener.FINISHED_MATCHES_PERSISTENCE_SERVICE_SERVICE_KEY);
+        this.finishedMatches = (FinishedMatchesPersistenceService) context.getAttribute(FinishedMatchesPersistenceService.class.getSimpleName());
     }
 
     @Override
@@ -41,15 +40,16 @@ public class MatchesController extends BaseServlet {
 
         MatchesPage result = finishedMatches.getMatchesPage(playerName, page, size);
 
-        req.setAttribute(ATTRIBUTE_MATCHES, result.getMatches());
-        req.setAttribute(ATTRIBUTE_PAGE_INFO, result.getPageInfo());
-        req.setAttribute(ATTRIBUTE_CURRENT_SEARCH, playerName); // ⚠️ Важно для JSP!
+        req.setAttribute(ATTRIBUTE_MATCHES, result.matches());
+        req.setAttribute(ATTRIBUTE_PAGE_INFO, result.pageInfo());
+        req.setAttribute(ATTRIBUTE_CURRENT_SEARCH, playerName);
 
         req.getRequestDispatcher(PATH_FILE).forward(req, resp);
     }
 
     private int parseIntParam(String param, int defaultValue) {
-        if (param == null) return defaultValue;
+        if (param == null)
+        {return defaultValue;}
         try {
             return Integer.parseInt(param);
         } catch (NumberFormatException e) {

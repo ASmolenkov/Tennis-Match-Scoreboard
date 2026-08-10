@@ -1,5 +1,8 @@
 package io.github.asmolenkov.tennismatchscoreboard.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Point {
     ZERO("00"),
     FIFTEEN("15"),
@@ -12,12 +15,5 @@ public enum Point {
     Point(String displayValue) {
         this.displayValue = displayValue;
     }
-
-    public String getDisplayValue() {
-        return displayValue;
-    }
-
-
-
 
 }

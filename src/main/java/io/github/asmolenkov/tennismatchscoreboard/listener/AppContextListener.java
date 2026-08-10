@@ -14,11 +14,9 @@ import org.hibernate.SessionFactory;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
-    public static final String PLAYER_SERVICE_KEY = "playerService";
+
     public static final String PLAYER_REPOSITORY_KEY = "playerRepository";
     public static final String MATH_REPOSITORY_KEY = "mathRepository";
-    public static final String ONGOING_MATH_SERVICE_KEY = "mathRepository";
-    public static final String MATCH_SCORE_CALCULATION_SERVICE_KEY = "matchScoreCalculation";
     public static final String FINISHED_MATCH_REPOSITORY_SERVICE_KEY = "finishedMatchRepository";
     public static final String FINISHED_MATCHES_PERSISTENCE_SERVICE_SERVICE_KEY = "finishedMatchesPersistenceService";
 
@@ -29,20 +27,18 @@ public class AppContextListener implements ServletContextListener {
         SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
         TransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
         HibernatePlayerRepository hibernatePlayerRepository = new HibernatePlayerRepository(sessionFactory);
-        PlayerService playerService = new PlayerService(hibernatePlayerRepository, transactionManager);
+        PlayerInterface playerService = new PlayerService(hibernatePlayerRepository, transactionManager);
         ActiveMatchRepository activeMatchRepository = new ActiveMatchRepository();
-        OngoingMatchesService ongoingMatchesService = new OngoingMatchesService(activeMatchRepository);
+
         FinishedMatchRepository finishedMatchRepository = new HibernateFinishedMatchRepository(sessionFactory);
-        MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService(
-                activeMatchRepository);
-        FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService(
+        FinishedMatchesPersistence finishedMatchesPersistence = new FinishedMatchesPersistenceService(
                 transactionManager, finishedMatchRepository);
-        context.setAttribute(PLAYER_SERVICE_KEY, playerService);
+        OngoingMatches ongoingMatchesService = new OngoingMatchesService(activeMatchRepository,finishedMatchesPersistence ,playerService);
+        context.setAttribute(PlayerService.class.getSimpleName(), playerService);
         context.setAttribute(PLAYER_REPOSITORY_KEY, hibernatePlayerRepository);
         context.setAttribute(MATH_REPOSITORY_KEY, activeMatchRepository);
-        context.setAttribute(ONGOING_MATH_SERVICE_KEY, ongoingMatchesService);
-        context.setAttribute(MATCH_SCORE_CALCULATION_SERVICE_KEY, matchScoreCalculationService);
+        context.setAttribute(OngoingMatchesService.class.getSimpleName(), ongoingMatchesService);
         context.setAttribute(FINISHED_MATCH_REPOSITORY_SERVICE_KEY, finishedMatchRepository);
-        context.setAttribute(FINISHED_MATCHES_PERSISTENCE_SERVICE_SERVICE_KEY, finishedMatchesPersistenceService);
+        context.setAttribute(FINISHED_MATCHES_PERSISTENCE_SERVICE_SERVICE_KEY, FinishedMatchesPersistenceService.class.getSimpleName());
     }
 }
