@@ -152,7 +152,7 @@
                     <c:choose>
                         <c:when test="${matchScore.currentSet.isTieBreak}">
                             <span class="tb-badge">TB</span>
-                            <span class="tb-score">${matchScore.currentSet.tieBreakPlayerTwoPoints}</span>
+                            <span class="tb-score">${matchScore.currentSet.tieBreakPlayerSecondPoints}</span>
                         </c:when>
                         <c:otherwise>
                             ${matchScore.playerSecondCurrentGameScore}

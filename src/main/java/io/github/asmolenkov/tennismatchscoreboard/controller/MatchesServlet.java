@@ -1,6 +1,7 @@
 package io.github.asmolenkov.tennismatchscoreboard.controller;
 
 import io.github.asmolenkov.tennismatchscoreboard.dto.MatchesPage;
+import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistence;
 import io.github.asmolenkov.tennismatchscoreboard.service.FinishedMatchesPersistenceService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -24,7 +25,7 @@ public class MatchesServlet extends BaseServlet {
     private static final String PATH_FILE = "/WEB-INF/views/Matches.jsp";
     private static final String VIEW_FILE_NAME = "Matches";
 
-    private FinishedMatchesPersistenceService finishedMatches;
+    private FinishedMatchesPersistence finishedMatches;
 
     @Override
     public void init()  {
@@ -39,6 +40,11 @@ public class MatchesServlet extends BaseServlet {
         int size = parseIntParam(req.getParameter(PARAMETER_SIZE), 3);
 
         MatchesPage result = finishedMatches.getMatchesPage(playerName, page, size);
+        log.info("PageInfo: currentPage={}, totalPages={}, pageSize={}, totalItems={}",
+                 result.pageInfo().getCurrentPage(),
+                 result.pageInfo().getTotalPages(),
+                 result.pageInfo().getPageSize(),
+                 result.pageInfo().getTotalItems());
 
         req.setAttribute(ATTRIBUTE_MATCHES, result.matches());
         req.setAttribute(ATTRIBUTE_PAGE_INFO, result.pageInfo());

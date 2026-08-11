@@ -39,6 +39,18 @@ public class AppContextListener implements ServletContextListener {
         context.setAttribute(MATH_REPOSITORY_KEY, activeMatchRepository);
         context.setAttribute(OngoingMatchesService.class.getSimpleName(), ongoingMatchesService);
         context.setAttribute(FINISHED_MATCH_REPOSITORY_SERVICE_KEY, finishedMatchRepository);
-        context.setAttribute(FINISHED_MATCHES_PERSISTENCE_SERVICE_SERVICE_KEY, FinishedMatchesPersistenceService.class.getSimpleName());
+        context.setAttribute(FinishedMatchesPersistenceService.class.getSimpleName(), finishedMatchesPersistence);
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        ServletContext context = sce.getServletContext();
+
+        SessionFactory sessionFactory = (SessionFactory) context.getAttribute(SessionFactory.class.getSimpleName());
+        if(sessionFactory != null && !sessionFactory.isClosed()){
+            sessionFactory.close();
+        }
+
+        context.removeAttribute(SessionFactory.class.getSimpleName());
     }
 }

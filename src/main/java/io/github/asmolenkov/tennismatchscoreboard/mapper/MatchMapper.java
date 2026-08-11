@@ -6,12 +6,14 @@ import io.github.asmolenkov.tennismatchscoreboard.dto.PlayerDto;
 import io.github.asmolenkov.tennismatchscoreboard.dto.SetScoreDto;
 import io.github.asmolenkov.tennismatchscoreboard.entity.Match;
 import io.github.asmolenkov.tennismatchscoreboard.model.*;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+@UtilityClass
 @Slf4j
 public class MatchMapper {
 

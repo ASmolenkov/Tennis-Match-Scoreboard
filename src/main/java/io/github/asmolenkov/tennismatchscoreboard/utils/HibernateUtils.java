@@ -12,7 +12,7 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtils {
     private static final String INITIAL_SESSION_FAILED_TEMPLATE = "Initial SessionFactory creation failed: {}";
     @Getter
-    private static SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
 
 
@@ -22,10 +22,6 @@ public class HibernateUtils {
         }catch (Throwable ex){
             log.error(INITIAL_SESSION_FAILED_TEMPLATE, ex.getMessage(), ex);
         }
-    }
-
-    public static Session getSession(){
-        return sessionFactory.getCurrentSession();
     }
 
 }

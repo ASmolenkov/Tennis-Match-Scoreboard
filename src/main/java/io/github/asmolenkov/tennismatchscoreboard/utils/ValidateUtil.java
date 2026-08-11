@@ -42,6 +42,14 @@ public class ValidateUtil {
     }
 
     public void validateNamesAreUnique (String nameOne, String nameSecond) {
+        if(nameOne == null || nameSecond == null){
+            throw new NameIncorrectException("Имена пустые");
+        }
+
+        String playerOne = nameOne.trim();
+        String playerSecond = nameSecond.trim();
+
+
         if(nameOne.equalsIgnoreCase(nameSecond)){
             throw new DuplicateNameException(NAMES_SOME);
         }

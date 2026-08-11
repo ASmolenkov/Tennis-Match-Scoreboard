@@ -11,7 +11,7 @@ public record MatchScoreDto(UUID matchUuid, String playerOneName, String playerS
     public static MatchScoreDto finishedPlaceholder(UUID matchUuid) {
         return new MatchScoreDto(
                 matchUuid,
-                null,  // Имена неизвестны — матч удалён из памяти
+                null,
                 null,
                 0,
                 0,
@@ -19,8 +19,8 @@ public record MatchScoreDto(UUID matchUuid, String playerOneName, String playerS
                 null,
                 null,
                 null,
-                true,  // ← Ключевой флаг
-                null   // Победитель тоже неизвестен
+                true,
+                null
         );
     }
 

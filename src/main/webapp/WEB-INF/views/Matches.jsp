@@ -42,9 +42,9 @@
         <c:when test="${not empty matches}">
             <c:forEach var="match" items="${matches}">
                 <tr>
-                    <td>${match.playerOneName}</td>
-                    <td>${match.playerSecondName}</td>
-                    <td class="winner" >${match.winnerName}</td>
+                    <td>${match.playerOne.name}</td>
+                    <td>${match.playerSecond.name}</td>
+                    <td class="winner" >${match.winner.name}</td>
                 </tr>
             </c:forEach>
         </c:when>
@@ -76,7 +76,7 @@
 
 
         <div class="page-numbers">
-            <c:forEach var="i" begin="1" end="${pageInfo.totalPages}">
+            <c:forEach var="i" items="${pageInfo.visiblePageNumbers}">
                 <c:choose>
                     <c:when test="${i == pageInfo.currentPage}">
                         <span class="page-link current">${i}</span>
